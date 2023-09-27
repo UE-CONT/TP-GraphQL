@@ -13,6 +13,7 @@ type_defs = load_schema_from_path('movie.graphql')
 query = QueryType()
 movie = ObjectType('Movie')
 query.set_field('movie_with_id', r.movie_with_id)
+query.set_field('actor_with_id', r.actor_with_id)
 mutation = MutationType()
 mutation.set_field('update_movie_rate', r.update_movie_rate)
 actor = ObjectType('Actor')
@@ -26,7 +27,6 @@ def home():
 
 #####
 # graphql entry points
-
 @app.route('/graphql', methods=['GET'])
 def playground():
     return PLAYGROUND_HTML, 200
