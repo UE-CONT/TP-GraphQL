@@ -45,8 +45,8 @@ def get_movies_byuser(user):
    films = []
    for date in bookings["dates"]:
       for movieid in date["movies"]:
-         query = render_template('template/request/txt', movie_id=movieid)
-         movie = requests.post(f'http://172.16.134.175:{PORT_MOVIE}/graphql', json={'query': query})
+         query = render_template('request.txt', movie_id=movieid)
+         movie = requests.post(f'http://localhost:{PORT_MOVIE}/graphql', json={'query': query})
          films.append(movie.json())
    print(films)
    return make_response(jsonify({"films": films}), 200)
