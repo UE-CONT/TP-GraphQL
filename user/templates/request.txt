@@ -1,9 +1,8 @@
-query  {
-    actor_with_id({{ movie_id }}) {
+query {
+    movie_with_id(_id: "{{movie_id}}") {
         id
-        firstname
-        lastname
-        birthyear
-        films
+        title
+        director
+        rating
     }
 }
