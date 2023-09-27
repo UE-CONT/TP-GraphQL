@@ -1,6 +1,6 @@
 from ariadne import graphql_sync, make_executable_schema, load_schema_from_path, ObjectType, QueryType, MutationType
 from ariadne.constants import PLAYGROUND_HTML
-from flask import Flask, request, jsonify
+from flask import Flask, make_response, request, jsonify
 
 import resolvers as r
 
@@ -25,6 +25,7 @@ def playground():
     
 @app.route('/graphql', methods=['POST'])
 def graphql_server():
+    return 
     # todo to complete
 
 if __name__ == "__main__":
