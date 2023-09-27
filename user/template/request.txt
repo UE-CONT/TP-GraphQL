@@ -1,0 +1,9 @@
+query  {
+    actor_with_id({{ movie_id }}) {
+        id
+        firstname
+        lastname
+        birthyear
+        films
+    }
+}

@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, make_response
 import resolvers as r
 
 PORT = 3001
-HOST = '0.0.0.0'
+HOST = 'localhost'
 app = Flask(__name__)
 
 # todo create elements for Ariadne
