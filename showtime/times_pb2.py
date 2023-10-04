@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0btimes.proto\"+\n\tTimesData\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x10\n\x08moviesId\x18\x02 \x03(\t\"\x07\n\x05\x45mpty2[\n\x05Times\x12&\n\x0cGetShowtimes\x12\x06.Empty\x1a\n.TimesData\"\x00\x30\x01\x12*\n\x12GetShowtimesByDate\x12\x06.Empty\x1a\n.TimesData\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0btimes.proto\"\x19\n\tTimesDate\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\".\n\tTimesData\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x13\n\x0btimesMovies\x18\x02 \x03(\t\"\x07\n\x05\x45mpty2_\n\x05Times\x12&\n\x0cGetShowtimes\x12\x06.Empty\x1a\n.TimesData\"\x00\x30\x01\x12.\n\x12GetShowtimesByDate\x12\n.TimesDate\x1a\n.TimesData\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -21,10 +21,12 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'times_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _globals['_TIMESDATA']._serialized_start=15
-  _globals['_TIMESDATA']._serialized_end=58
-  _globals['_EMPTY']._serialized_start=60
-  _globals['_EMPTY']._serialized_end=67
-  _globals['_TIMES']._serialized_start=69
-  _globals['_TIMES']._serialized_end=160
+  _globals['_TIMESDATE']._serialized_start=15
+  _globals['_TIMESDATE']._serialized_end=40
+  _globals['_TIMESDATA']._serialized_start=42
+  _globals['_TIMESDATA']._serialized_end=88
+  _globals['_EMPTY']._serialized_start=90
+  _globals['_EMPTY']._serialized_end=97
+  _globals['_TIMES']._serialized_start=99
+  _globals['_TIMES']._serialized_end=194
 # @@protoc_insertion_point(module_scope)

@@ -2,12 +2,16 @@ syntax = "proto3";
 
 service Times {
     rpc GetShowtimes(Empty) returns (stream TimesData) {}
-    rpc GetShowtimesByDate(Empty) returns (TimesData) {}
+    rpc GetShowtimesByDate(TimesDate) returns (TimesData) {}
+}
+
+message TimesDate {
+    string date = 1;
 }
 
 message TimesData {
     string date = 1;
-    repeated string moviesId = 2;
+    repeated string timesMovies = 2;
 }
 
 message Empty {

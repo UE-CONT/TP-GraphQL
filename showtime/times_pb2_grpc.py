@@ -21,7 +21,7 @@ class TimesStub(object):
                 )
         self.GetShowtimesByDate = channel.unary_unary(
                 '/Times/GetShowtimesByDate',
-                request_serializer=times__pb2.Empty.SerializeToString,
+                request_serializer=times__pb2.TimesDate.SerializeToString,
                 response_deserializer=times__pb2.TimesData.FromString,
                 )
 
@@ -51,7 +51,7 @@ def add_TimesServicer_to_server(servicer, server):
             ),
             'GetShowtimesByDate': grpc.unary_unary_rpc_method_handler(
                     servicer.GetShowtimesByDate,
-                    request_deserializer=times__pb2.Empty.FromString,
+                    request_deserializer=times__pb2.TimesDate.FromString,
                     response_serializer=times__pb2.TimesData.SerializeToString,
             ),
     }
@@ -93,7 +93,7 @@ class Times(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/Times/GetShowtimesByDate',
-            times__pb2.Empty.SerializeToString,
+            times__pb2.TimesDate.SerializeToString,
             times__pb2.TimesData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
