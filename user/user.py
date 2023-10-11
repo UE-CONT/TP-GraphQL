@@ -17,7 +17,7 @@ HOST = '0.0.0.0'
 PORT_BOOKING = 3002
 PORT_MOVIE = 3001
 
-# CALLING GraphQL requests
+# CALLING gRPC requests
 @app.route("/bookings/<user>", methods=['GET'])
 def get_bookings_byuser(user):
    userid = ""
@@ -30,8 +30,10 @@ def get_bookings_byuser(user):
          break
    if not userid:
       return make_response(jsonify({"error": "User not found"}), 400)
-   req = requests.get(f'http://localhost:{PORT_BOOKING}/bookings/{userid}')
-   return make_response(req.json(), 200)
+   with grpc.insecure_channel(f'localhost:{PORT_BOOKING}') as channel:
+      stub = booking_pb2_grpc.BookingStub(channel)
+      req = getBookingByUser(stub, stringToUserId(userid))
+      return make_response(req, 200)
 
 @app.route("/", methods=['GET'])
 def home():
@@ -56,14 +58,25 @@ with open('{}/data/users.json'.format("."), "r") as jsf:
 ### --------------- Client ----------------- ###
 
 def getBookingByUser(stub, user):
+    response = {}
     booking = stub.GetBookingByUser(user)
     dates = booking.dates
     print("User: %s" % (booking.userid))
+    response['userid'] = booking.userid
+    Dates = []
     for date in dates:
+       date_response = {}
        movies=date.movieid
        print("    Date: %s" % (date.date))
+       date_response['date'] = date.date
+       Movies = []
        for movie in movies:
          print("        MovieId: %s" % (movie))
+         Movies.append(movie)
+       date_response['movies'] = Movies
+       Dates.append(date_response)
+    response['dates'] = Dates
+    return response
 
 def getBooking(stub):
    bookings = stub.GetBooking(booking_pb2.EmptyBooking())
@@ -89,6 +102,6 @@ def run():
        getBooking(stub)
 
 if __name__ == "__main__":
-   # print("Server running in port %s"%(PORT))
-   # app.run(host=HOST, port=PORT)
-   run()
+   print("Server running in port %s"%(PORT))
+   app.run(host=HOST, port=PORT)
+   # run()

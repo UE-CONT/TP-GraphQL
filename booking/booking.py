@@ -53,7 +53,7 @@ def serve():
 
 
 def run():
-    with grpc.insecure_channel('localhost:3002') as channel:
+    with grpc.insecure_channel('localhost:3003') as channel:
         stub = times_pb2_grpc.TimesStub(channel)
         print("-------------- GetShowtimes --------------")
         getShowtimes(stub)
