@@ -47,24 +47,24 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
     def SetBookingByUser(self, request, context):
         with grpc.insecure_channel('localhost:3003') as channel:
             stub = times_pb2_grpc.TimesStub(channel)
-            showtime = getShowtimesByDate(stub, request.date)
-            if request.movieid in showtime:
+            showtime = getShowtimesByDate(stub, stringToTimesDate(request.date))
+            if request.movieid in showtime.timesMovies:
                 for booking in self.db:
-                    if booking.userid == request.userid:
+                    if booking["userid"] == request.userid:
                         added = False
-                        for date in booking.dates :
-                            if date.date == request.date:
-                                if request.movieid in date.movies:
+                        for date in booking["dates"] :
+                            if date["date"] == request.date:
+                                if request.movieid in date["movies"]:
                                     return booking_pb2.BooleanData(status=False, message='You have already booked this movie for this date')
                                 else :
-                                    date.movies.append(request.movieid)
+                                    date["movies"].append(request.movieid)
                                 added = True
                         if not added:
                             date = {
                                 "date": request.date,
                                 "movies":[request.movieid]
                             }
-                            booking.dates.append(date)
+                            booking["dates"].append(date)
                 return booking_pb2.BooleanData(status=True, message='OK')
             else :
                 return booking_pb2.BooleanData(status=False, message='This movie is not available at the selected date')
@@ -91,5 +91,5 @@ def run():
     channel.close()
 
 if __name__ == '__main__':
-    #serve()
-    run()
+    serve()
+    #run()

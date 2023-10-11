@@ -12,6 +12,7 @@ def movie_with_title(_,info,_title):
         movies = json.load(file)
         for movie in movies['movies']:
             if movie['title'] == _title:
+                print("Movie found!")
                 return movie
 
 def update_movie_rate(_,info,_id,_rate):

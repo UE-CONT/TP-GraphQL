@@ -1,0 +1,10 @@
+{
+  "title": "The Night Before",
+  "date": "20151204"
+}
+
+query {
+    movie_with_title(_title: "The Night Before") {
+        id
+    }
+}
