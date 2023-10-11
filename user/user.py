@@ -51,11 +51,42 @@ def get_movies_byuser(user):
    print(films)
    return make_response(jsonify({"films": films}), 200)
 
+@app.route("/bookings/<user>", methods=['POST'])
+def set_booking_user(user):
+   req = request.get_json()
+   userid = ""
+   for userInfo in users:
+      if str(userInfo["name"]) == str(user):
+         userid = userInfo["id"]
+         break
+      elif str(userInfo["id"]) == str(user):
+         userid = user
+         break
+   if not userid:
+      return make_response(jsonify({"error": "User not found"}), 400)
+   query = render_template('request_movie_title.txt', title=req.title)
+   movie = requests.post(f'http://localhost:{PORT_MOVIE}/graphql', json={'query': query})
+   if (movie.json()["id"]):
+      movieid = movie.json()["id"]
+   else:
+      return make_response(jsonify({"error": "Movie not found"}), 401)
+   with grpc.insecure_channel(f'localhost:{PORT_BOOKING}') as channel:
+      stub = booking_pb2_grpc.BookingStub(channel)
+      valid, errormsg = setBookingByUser(stub, stringToSetBookingId(userid, req.date, movieid))
+      if valid:
+         return make_response(req, 200)
+      else:
+         return make_response(jsonify({f"error": "Booking could not be made\n{errormsg}"}), 402)
 
 with open('{}/data/users.json'.format("."), "r") as jsf:
    users = json.load(jsf)["users"]
 
 ### --------------- Client ----------------- ###
+
+def setBookingByUser(stub, booking):
+   valid = stub.SetBookingByUser(booking)
+   return valid.status, valid.message
+
 
 def getBookingByUser(stub, user):
     response = {}
@@ -91,6 +122,9 @@ def getBooking(stub):
 
 def stringToUserId(id):
     return booking_pb2.UserId(id = id)
+
+def stringToSetBookingId(userid, date, movieid):
+    return booking_pb2.SetBookingId(userid = userid, movieid = movieid, date = date)
 
 def run():
     with grpc.insecure_channel(f'localhost:{PORT_BOOKING}') as channel:
