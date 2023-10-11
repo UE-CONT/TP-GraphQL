@@ -9,14 +9,12 @@ import grpc
 from concurrent import futures
 import booking_pb2
 import booking_pb2_grpc
-# import movie_pb2
-# import movie_pb2_grpc
 
 app = Flask(__name__)
 
 PORT = 3004
 HOST = '0.0.0.0'
-PORT_BOOKING = 3201
+PORT_BOOKING = 3002
 PORT_MOVIE = 3001
 
 # CALLING GraphQL requests
