@@ -68,7 +68,13 @@ def getBookingByUser(stub, user):
 def getBooking(stub):
    bookings = stub.GetBooking(booking_pb2.EmptyBooking())
    for booking in bookings:
-      print("Booking: %s %s" % (booking.userid, booking.dates))
+      dates = booking.dates
+      print("User: %s" % (booking.userid))
+      for date in dates:
+         movies=date.movieid
+         print("    Date: %s" % (date.date))
+         for movie in movies:
+            print("        MovieId: %s" % (movie))
 
 def stringToUserId(id):
     return booking_pb2.UserId(id = id)
@@ -79,6 +85,8 @@ def run():
        print("-------------- GetBookingByUser --------------")
        userId = stringToUserId("dwight_schrute")
        getBookingByUser(stub,userId)
+       print("-------------- GetBooking --------------")
+       getBooking(stub)
 
 if __name__ == "__main__":
    # print("Server running in port %s"%(PORT))

@@ -35,9 +35,13 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
                 return booking_pb2.BookingData(userid=booking['userid'], dates=Dates)
         return booking_pb2.BookingData(userid='', dates='')
 
-    def getBooking(self, request, context):
+    def GetBooking(self, request, context):
         for booking in self.db:
-            yield booking_pb2.BookingData(userid=booking['userid'], dates=booking['dates'])
+            Dates = []
+            for date in booking['dates']:
+                date = booking_pb2.DateData(date=date['date'],movieid=date['movies'])
+                Dates.append(date)
+            yield booking_pb2.BookingData(userid=booking['userid'], dates=Dates)
 
 
 def serve():
@@ -62,4 +66,4 @@ def run():
 
 if __name__ == '__main__':
     serve()
-    #run()
+    run()
