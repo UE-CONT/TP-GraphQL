@@ -22,7 +22,7 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
 
     def __init__(self):
         with open('{}/data/bookings.json'.format("."), "r") as jsf:
-            self.db = json.load(jsf)["schedule"]
+            self.db = json.load(jsf)["bookings"]
 
     def GetBookingByUser(self, request, conntext):
         for booking in self.db:
