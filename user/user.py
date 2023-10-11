@@ -7,8 +7,8 @@ from werkzeug.exceptions import NotFound
 # CALLING gRPC requests
 import grpc
 from concurrent import futures
-# import booking_pb2
-# import booking_pb2_grpc
+import booking_pb2
+import booking_pb2_grpc
 # import movie_pb2
 # import movie_pb2_grpc
 
@@ -55,6 +55,29 @@ def get_movies_byuser(user):
 with open('{}/data/users.json'.format("."), "r") as jsf:
    users = json.load(jsf)["users"]
 
+### --------------- Client ----------------- ###
+
+def getBookingByUser(stub, user):
+    booking = stub.GetBookingByUser(user)
+    dates = booking.DateData
+    print("Booking: %s" % (booking.date))
+    for date in dates:
+       movies=date.movieId
+       print("    Date: %s" % (booking.date))
+       for movie in movies:
+         print("        MovieId: %s" % (movie))
+
+def stringToUserId(id):
+    return booking_pb2.UserId(id = id)
+
+def run():
+    with grpc.insecure_channel(f'localhost:{PORT_BOOKING}') as channel:
+       stub = booking_pb2_grpc.BookingStub(channel)
+       print("-------------- GetBookingByUser --------------")
+       userId = stringToUserId("dwight_schrute")
+       getBookingByUser(stub,userId)
+
 if __name__ == "__main__":
    print("Server running in port %s"%(PORT))
    app.run(host=HOST, port=PORT)
+   run()
