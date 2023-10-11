@@ -14,6 +14,7 @@ def getShowtimes(stub):
 def getShowtimesByDate(stub, date):
     showtime = stub.GetShowtimesByDate(date)
     print("Showtime: %s %s" % (showtime.date, showtime.timesMovies))
+    return showtime
 
 def stringToTimesDate(date):
     return times_pb2.TimesDate(date = date)
@@ -43,6 +44,31 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
                 Dates.append(date)
             yield booking_pb2.BookingData(userid=booking['userid'], dates=Dates)
 
+    def SetBookingByUser(self, request, context):
+        with grpc.insecure_channel('localhost:3003') as channel:
+            stub = times_pb2_grpc.TimesStub(channel)
+            showtime = getShowtimesByDate(stub, request.date)
+            if request.movieid in showtime:
+                for booking in self.db:
+                    if booking.userid == request.userid:
+                        added = False
+                        for date in booking.dates :
+                            if date.date == request.date:
+                                if request.movieid in date.movies:
+                                    return booking_pb2.BooleanData(status=False, message='You have already booked this movie for this date')
+                                else :
+                                    date.movies.append(request.movieid)
+                                added = True
+                        if not added:
+                            date = {
+                                "date": request.date,
+                                "movies":[request.movieid]
+                            }
+                            booking.dates.append(date)
+                return booking_pb2.BooleanData(status=True, message='OK')
+            else :
+                return booking_pb2.BooleanData(status=False, message='This movie is not available at the selected date')
+        return 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -65,5 +91,5 @@ def run():
     channel.close()
 
 if __name__ == '__main__':
-    serve()
+    #serve()
     run()

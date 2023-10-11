@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rbooking.proto\"\x14\n\x06UserId\x12\n\n\x02id\x18\x01 \x01(\t\"7\n\x0b\x42ookingData\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x18\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\t.DateData\")\n\x08\x44\x61teData\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0f\n\x07movieid\x18\x02 \x03(\t\"\x0e\n\x0c\x45mptyBooking\"=\n\x0cSetBookingId\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x0f\n\x07movieid\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t2\x98\x01\n\x07\x42ooking\x12-\n\nGetBooking\x12\r.EmptyBooking\x1a\x0c.BookingData\"\x00\x30\x01\x12+\n\x10GetBookingByUser\x12\x07.UserId\x1a\x0c.BookingData\"\x00\x12\x31\n\x10SetBookingByUser\x12\r.SetBookingId\x1a\x0c.BookingData\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rbooking.proto\"\x14\n\x06UserId\x12\n\n\x02id\x18\x01 \x01(\t\"7\n\x0b\x42ookingData\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x18\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\t.DateData\")\n\x08\x44\x61teData\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0f\n\x07movieid\x18\x02 \x03(\t\"\x0e\n\x0c\x45mptyBooking\"=\n\x0cSetBookingId\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x0f\n\x07movieid\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\"\x1d\n\x0b\x42ooleanData\x12\x0e\n\x06status\x18\x01 \x01(\x08\x32\x98\x01\n\x07\x42ooking\x12-\n\nGetBooking\x12\r.EmptyBooking\x1a\x0c.BookingData\"\x00\x30\x01\x12+\n\x10GetBookingByUser\x12\x07.UserId\x1a\x0c.BookingData\"\x00\x12\x31\n\x10SetBookingByUser\x12\r.SetBookingId\x1a\x0c.BooleanData\"\x00\x62\x06proto3')
 
 
 
@@ -23,6 +23,7 @@ _BOOKINGDATA = DESCRIPTOR.message_types_by_name['BookingData']
 _DATEDATA = DESCRIPTOR.message_types_by_name['DateData']
 _EMPTYBOOKING = DESCRIPTOR.message_types_by_name['EmptyBooking']
 _SETBOOKINGID = DESCRIPTOR.message_types_by_name['SetBookingId']
+_BOOLEANDATA = DESCRIPTOR.message_types_by_name['BooleanData']
 UserId = _reflection.GeneratedProtocolMessageType('UserId', (_message.Message,), {
   'DESCRIPTOR' : _USERID,
   '__module__' : 'booking_pb2'
@@ -58,6 +59,13 @@ SetBookingId = _reflection.GeneratedProtocolMessageType('SetBookingId', (_messag
   })
 _sym_db.RegisterMessage(SetBookingId)
 
+BooleanData = _reflection.GeneratedProtocolMessageType('BooleanData', (_message.Message,), {
+  'DESCRIPTOR' : _BOOLEANDATA,
+  '__module__' : 'booking_pb2'
+  # @@protoc_insertion_point(class_scope:BooleanData)
+  })
+_sym_db.RegisterMessage(BooleanData)
+
 _BOOKING = DESCRIPTOR.services_by_name['Booking']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
@@ -72,6 +80,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _EMPTYBOOKING._serialized_end=153
   _SETBOOKINGID._serialized_start=155
   _SETBOOKINGID._serialized_end=216
-  _BOOKING._serialized_start=219
-  _BOOKING._serialized_end=371
+  _BOOLEANDATA._serialized_start=218
+  _BOOLEANDATA._serialized_end=247
+  _BOOKING._serialized_start=250
+  _BOOKING._serialized_end=402
 # @@protoc_insertion_point(module_scope)
