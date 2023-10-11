@@ -1,7 +1,7 @@
 import grpc
 from concurrent import futures
-#import booking_pb2
-#import booking_pb2_grpc
+import booking_pb2
+import booking_pb2_grpc
 import times_pb2
 import times_pb2_grpc
 import json
@@ -17,12 +17,23 @@ def getShowtimesByDate(stub, date):
 
 def stringToTimesDate(date):
     return times_pb2.TimesDate(date = date)
-'''
+
 class BookingServicer(booking_pb2_grpc.BookingServicer):
 
     def __init__(self):
         with open('{}/data/bookings.json'.format("."), "r") as jsf:
             self.db = json.load(jsf)["schedule"]
+
+    def GetBookingByUser(self, request, conntext):
+        for booking in self.db:
+            if booking['userid'] == request.id:
+                print("User found!")
+                return booking_pb2.BookingData(userid=booking['userid'], dates=booking['dates'])
+        return booking_pb2.BookingData(userid='', dates='')
+
+    def getBooking(self, request, context):
+        for booking in self.db:
+            yield booking_pb2.BookingData(userid=booking['userid'], dates=booking['dates'])
 
 
 def serve():
@@ -31,7 +42,7 @@ def serve():
     server.add_insecure_port('[::]:3002')
     server.start()
     server.wait_for_termination()
-'''
+
 
 def run():
     with grpc.insecure_channel('localhost:3002') as channel:
