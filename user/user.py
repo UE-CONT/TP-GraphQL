@@ -72,11 +72,11 @@ def set_booking_user(user):
       return make_response(jsonify({"error": "Movie not found"}), 401)
    with grpc.insecure_channel(f'localhost:{PORT_BOOKING}') as channel:
       stub = booking_pb2_grpc.BookingStub(channel)
-      valid = setBookingByUser(stub, stringToSetBookingId(userid, req.date, movieid))
+      valid, errormsg = setBookingByUser(stub, stringToSetBookingId(userid, req.date, movieid))
       if valid:
          return make_response(req, 200)
       else:
-         return make_response(jsonify({"error": "Booking could not be made"}), 402)
+         return make_response(jsonify({f"error": "Booking could not be made\n{errormsg}"}), 402)
 
 with open('{}/data/users.json'.format("."), "r") as jsf:
    users = json.load(jsf)["users"]
@@ -85,7 +85,7 @@ with open('{}/data/users.json'.format("."), "r") as jsf:
 
 def setBookingByUser(stub, booking):
    valid = stub.SetBookingByUser(booking)
-   return valid.status
+   return valid.status, valid.message
 
 
 def getBookingByUser(stub, user):
