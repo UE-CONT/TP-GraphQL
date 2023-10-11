@@ -24,6 +24,11 @@ class BookingStub(object):
                 request_serializer=booking__pb2.UserId.SerializeToString,
                 response_deserializer=booking__pb2.BookingData.FromString,
                 )
+        self.SetBookingByUser = channel.unary_unary(
+                '/Booking/SetBookingByUser',
+                request_serializer=booking__pb2.SetBookingId.SerializeToString,
+                response_deserializer=booking__pb2.BookingData.FromString,
+                )
 
 
 class BookingServicer(object):
@@ -41,6 +46,12 @@ class BookingServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SetBookingByUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_BookingServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -52,6 +63,11 @@ def add_BookingServicer_to_server(servicer, server):
             'GetBookingByUser': grpc.unary_unary_rpc_method_handler(
                     servicer.GetBookingByUser,
                     request_deserializer=booking__pb2.UserId.FromString,
+                    response_serializer=booking__pb2.BookingData.SerializeToString,
+            ),
+            'SetBookingByUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetBookingByUser,
+                    request_deserializer=booking__pb2.SetBookingId.FromString,
                     response_serializer=booking__pb2.BookingData.SerializeToString,
             ),
     }
@@ -94,6 +110,23 @@ class Booking(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/Booking/GetBookingByUser',
             booking__pb2.UserId.SerializeToString,
+            booking__pb2.BookingData.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SetBookingByUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Booking/SetBookingByUser',
+            booking__pb2.SetBookingId.SerializeToString,
             booking__pb2.BookingData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
