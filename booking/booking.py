@@ -7,7 +7,7 @@ import times_pb2_grpc
 import json
 
 def getShowtimes(stub):
-    showtimes = stub.GetShowtimes(times_pb2.Empty())
+    showtimes = stub.GetShowtimes(times_pb2.EmptyTimes())
     for showtime in showtimes:
         print("Showtime: %s %s" % (showtime.date, showtime.timesMovies))
 

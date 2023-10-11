@@ -67,6 +67,11 @@ def getBookingByUser(stub, user):
        for movie in movies:
          print("        MovieId: %s" % (movie))
 
+def getBooking(stub):
+   bookings = stub.GetBooking(booking_pb2.EmptyBooking())
+   for booking in bookings:
+      print("Booking: %s %s" % (booking.userid, booking.dates))
+
 def stringToUserId(id):
     return booking_pb2.UserId(id = id)
 

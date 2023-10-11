@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 service Booking {
-    rpc GetBooking(Empty) returns (stream BookingData) {}
+    rpc GetBooking(EmptyBooking) returns (stream BookingData) {}
     rpc GetBookingByUser(UserId) returns (BookingData) {}
 }
 
@@ -19,6 +19,6 @@ message DateData {
     repeated string movieid = 2;
 }
 
-message Empty {
+message EmptyBooking {
 }
 

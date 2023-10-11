@@ -4,8 +4,9 @@
 """Generated protocol buffer code."""
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
+from google.protobuf import message as _message
+from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
-from google.protobuf.internal import builder as _builder
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -13,20 +14,44 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0btimes.proto\"\x19\n\tTimesDate\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\".\n\tTimesData\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x13\n\x0btimesMovies\x18\x02 \x03(\t\"\x07\n\x05\x45mpty2_\n\x05Times\x12&\n\x0cGetShowtimes\x12\x06.Empty\x1a\n.TimesData\"\x00\x30\x01\x12.\n\x12GetShowtimesByDate\x12\n.TimesDate\x1a\n.TimesData\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0btimes.proto\"\x19\n\tTimesDate\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\".\n\tTimesData\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x13\n\x0btimesMovies\x18\x02 \x03(\t\"\x0c\n\nEmptyTimes2d\n\x05Times\x12+\n\x0cGetShowtimes\x12\x0b.EmptyTimes\x1a\n.TimesData\"\x00\x30\x01\x12.\n\x12GetShowtimesByDate\x12\n.TimesDate\x1a\n.TimesData\"\x00\x62\x06proto3')
 
-_globals = globals()
-_builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
-_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'times_pb2', _globals)
+
+
+_TIMESDATE = DESCRIPTOR.message_types_by_name['TimesDate']
+_TIMESDATA = DESCRIPTOR.message_types_by_name['TimesData']
+_EMPTYTIMES = DESCRIPTOR.message_types_by_name['EmptyTimes']
+TimesDate = _reflection.GeneratedProtocolMessageType('TimesDate', (_message.Message,), {
+  'DESCRIPTOR' : _TIMESDATE,
+  '__module__' : 'times_pb2'
+  # @@protoc_insertion_point(class_scope:TimesDate)
+  })
+_sym_db.RegisterMessage(TimesDate)
+
+TimesData = _reflection.GeneratedProtocolMessageType('TimesData', (_message.Message,), {
+  'DESCRIPTOR' : _TIMESDATA,
+  '__module__' : 'times_pb2'
+  # @@protoc_insertion_point(class_scope:TimesData)
+  })
+_sym_db.RegisterMessage(TimesData)
+
+EmptyTimes = _reflection.GeneratedProtocolMessageType('EmptyTimes', (_message.Message,), {
+  'DESCRIPTOR' : _EMPTYTIMES,
+  '__module__' : 'times_pb2'
+  # @@protoc_insertion_point(class_scope:EmptyTimes)
+  })
+_sym_db.RegisterMessage(EmptyTimes)
+
+_TIMES = DESCRIPTOR.services_by_name['Times']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _globals['_TIMESDATE']._serialized_start=15
-  _globals['_TIMESDATE']._serialized_end=40
-  _globals['_TIMESDATA']._serialized_start=42
-  _globals['_TIMESDATA']._serialized_end=88
-  _globals['_EMPTY']._serialized_start=90
-  _globals['_EMPTY']._serialized_end=97
-  _globals['_TIMES']._serialized_start=99
-  _globals['_TIMES']._serialized_end=194
+  _TIMESDATE._serialized_start=15
+  _TIMESDATE._serialized_end=40
+  _TIMESDATA._serialized_start=42
+  _TIMESDATA._serialized_end=88
+  _EMPTYTIMES._serialized_start=90
+  _EMPTYTIMES._serialized_end=102
+  _TIMES._serialized_start=104
+  _TIMES._serialized_end=204
 # @@protoc_insertion_point(module_scope)
