@@ -57,11 +57,11 @@ with open('{}/data/users.json'.format("."), "r") as jsf:
 
 def getBookingByUser(stub, user):
     booking = stub.GetBookingByUser(user)
-    dates = booking.DateData
-    print("Booking: %s" % (booking.date))
+    dates = booking.dates
+    print("User: %s" % (booking.userid))
     for date in dates:
-       movies=date.movieId
-       print("    Date: %s" % (booking.date))
+       movies=date.movieid
+       print("    Date: %s" % (date.date))
        for movie in movies:
          print("        MovieId: %s" % (movie))
 

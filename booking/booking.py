@@ -28,7 +28,11 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
         for booking in self.db:
             if booking['userid'] == request.id:
                 print("User found!")
-                return booking_pb2.BookingData(userid=booking['userid'], dates=booking['dates'])
+                Dates = []
+                for date in booking['dates']:
+                    date = booking_pb2.DateData(date=date['date'],movieid=date['movies'])
+                    Dates.append(date)
+                return booking_pb2.BookingData(userid=booking['userid'], dates=Dates)
         return booking_pb2.BookingData(userid='', dates='')
 
     def getBooking(self, request, context):
