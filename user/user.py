@@ -1,4 +1,6 @@
 # REST API
+import asyncio
+import time
 from flask import Flask, render_template, request, jsonify, make_response
 import requests
 import json
@@ -91,8 +93,13 @@ def setBookingByUser(stub, booking):
 
 
 def getBookingByUser(stub, user):
+    future = stub.GetBookingByUser.future(user)
+    future.add_done_callback(process_response)
+
+def process_response(future_response):
+    print('------------After 5 seconds-------------')
     response = {}
-    booking = stub.GetBookingByUser(user)
+    booking = future_response.result()
     dates = booking.dates
     print("User: %s" % (booking.userid))
     response['userid'] = booking.userid
@@ -131,13 +138,17 @@ def stringToSetBookingId(userid, date, movieid):
 def run():
     with grpc.insecure_channel(f'localhost:{PORT_BOOKING}') as channel:
        stub = booking_pb2_grpc.BookingStub(channel)
-       print("-------------- GetBookingByUser --------------")
+       print("-------------- GetBookingByUser in 5 seconds--------------")
        userId = stringToUserId("dwight_schrute")
        getBookingByUser(stub,userId)
        print("-------------- GetBooking --------------")
        getBooking(stub)
+       while(True):
+            time.sleep(1000000)
 
 if __name__ == "__main__":
-   print("Server running in port %s"%(PORT))
-   app.run(host=HOST, port=PORT)
-   # run()
+   # print("Server running in port %s"%(PORT))
+   # app.run(host=HOST, port=PORT)
+   run()
+   while(True):
+      time.sleep(1000000)

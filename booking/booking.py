@@ -1,3 +1,4 @@
+import time
 import grpc
 from concurrent import futures
 import booking_pb2
@@ -28,6 +29,7 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
     def GetBookingByUser(self, request, conntext):
         for booking in self.db:
             if booking['userid'] == request.id:
+                time.sleep(5)
                 print("User found!")
                 Dates = []
                 for date in booking['dates']:
