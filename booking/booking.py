@@ -25,7 +25,7 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
         with open('{}/data/bookings.json'.format("."), "r") as jsf:
             self.db = json.load(jsf)["bookings"]
 
-    def GetBookingByUser(self, request, conntext):
+    def GetBookingByUser(self, request, context):
         for booking in self.db:
             if booking['userid'] == request.id:
                 print("User found!")

@@ -49,7 +49,7 @@ def get_movies_byuser(user):
          movie = requests.post(f'http://localhost:{PORT_MOVIE}/graphql', json={'query': query})
          films.append(movie.json())
    print(films)
-   return make_response(jsonify({"films": films}), 200)
+   return make_response(jsonify({"movies": films}), 200)
 
 @app.route("/bookings/<user>", methods=['POST'])
 def set_booking_user(user):
