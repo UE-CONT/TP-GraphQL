@@ -93,8 +93,31 @@ def setBookingByUser(stub, booking):
 
 
 def getBookingByUser(stub, user):
+    booking = stub.GetBookingByUser(user)
+    print('------------After 5 seconds-------------')
+    response = {}
+    dates = booking.dates
+    print("User: %s" % (booking.userid))
+    response['userid'] = booking.userid
+    Dates = []
+    for date in dates:
+       date_response = {}
+       movies=date.movieid
+       print("    Date: %s" % (date.date))
+       date_response['date'] = date.date
+       Movies = []
+       for movie in movies:
+         print("        MovieId: %s" % (movie))
+         Movies.append(movie)
+       date_response['movies'] = Movies
+       Dates.append(date_response)
+    response['dates'] = Dates
+    return response
+
+def getBookingByUserAsynchrone(stub, user):
     future = stub.GetBookingByUser.future(user)
     future.add_done_callback(process_response)
+
 
 def process_response(future_response):
     print('------------After 5 seconds-------------')
@@ -140,15 +163,12 @@ def run():
        stub = booking_pb2_grpc.BookingStub(channel)
        print("-------------- GetBookingByUser in 5 seconds--------------")
        userId = stringToUserId("dwight_schrute")
-       getBookingByUser(stub,userId)
+       getBookingByUserAsynchrone(stub,userId)
        print("-------------- GetBooking --------------")
        getBooking(stub)
-       while(True):
-            time.sleep(1000000)
+
 
 if __name__ == "__main__":
-   # print("Server running in port %s"%(PORT))
-   # app.run(host=HOST, port=PORT)
-   run()
-   while(True):
-      time.sleep(1000000)
+   print("Server running in port %s"%(PORT))
+   app.run(host=HOST, port=PORT)
+   # run()
