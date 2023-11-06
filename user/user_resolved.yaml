@@ -1,0 +1,175 @@
+---
+openapi: 3.1.0
+info:
+  title: user API
+  description: This is the API of the user service
+  contact:
+    email: helene.coullon@imt-atlantique.fr
+  license:
+    name: GPL v3
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+  version: 1.0.0
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /:
+    get:
+      tags:
+      - developers
+      summary: home page of the service
+      description: |
+        Nothing to do
+      operationId: home
+      responses:
+        "200":
+          description: welcome message
+          content:
+            text/html:
+              schema:
+                type: string
+                example: <h1 style='color:blue'>Welcome to the User service!</h1>
+  /movies/{user}:
+    get:
+      tags:
+      - developers
+      summary: get the movies in bookings of a user
+      description: By passing in the appropriate options, you can get movies that a user have or plan to watch
+      operationId: get_movies_byuser
+      parameters:
+      - name/id : user
+        in: path
+        description: User ID or name.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Movies of a user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviesUser'
+  /bookings/{user}:
+    get:
+      tags:
+      - developers
+      summary: get the bookings from a user id or name
+      description: By passing in the appropriate options, you can get bookings of a user
+      operationId: get_bookings_byuser
+      parameters:
+      - name/id : user
+        in: path
+        description: User ID or name.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Bookings of the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsUser'
+        "400":
+          description: User not found
+    post:
+      tags:
+      - admins
+      summary: add a booking for a user
+      description: Adds a booking for the user, the service showtimes have to be requested to check the validity of the booking that is asked
+      operationId: set_booking_user
+      parameters:
+      - name/id : user
+        in: path
+        description: User ID or name.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMovie'
+      responses:
+        "200":
+          description: Booking created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsUser'
+        "400":
+          description: The user have not been found
+        "401":
+          description: Movie not found
+        "402":
+          description: An existing item already exists or the connexion between services is unavailable
+components:
+  schemas:
+    BookingsUser:
+      required:
+      - dates
+      - userid
+      type: object
+      properties:
+        userid:
+          type: string
+          example: chris_rivers
+        dates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateItem'
+    DateItem:
+      required:
+      - date
+      - movies
+      type: object
+      properties:
+        date:
+          type: string
+          example: "20151201"
+        movies:
+          type: array
+          items:
+            type: string
+            example: 276c79ec-a26a-40a6-b3d3-fb242a5947b6
+    NewMovie:
+      required:
+      - title
+      - date
+      type: object
+      properties:
+        title:
+          type: string
+          example: "The Martian"
+        date:
+          type: string
+          example: "20151201"
+    MoviesUser:
+      required:
+      - movies
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: "a8034f44-aee4-44cf-b32c-74cf452aaaae"
+          title:
+            type: string
+            example: "The Martian"
+          director:
+            type: string
+            example: "Ridley Scott"
+          rating:
+            type: float
+            example: 8.4
