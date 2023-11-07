@@ -142,6 +142,7 @@ def process_response(future_response):
     return response
 
 def getBooking(stub):
+   '''Function to test connexion with booking service'''
    bookings = stub.GetBooking(booking_pb2.EmptyBooking())
    for booking in bookings:
       dates = booking.dates
