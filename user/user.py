@@ -166,9 +166,11 @@ def run():
        getBookingByUserAsynchrone(stub,userId)
        print("-------------- GetBooking --------------")
        getBooking(stub)
+       while(True):
+          time.sleep(10000)
 
 
 if __name__ == "__main__":
-   print("Server running in port %s"%(PORT))
-   app.run(host=HOST, port=PORT)
-   # run()
+   # print("Server running in port %s"%(PORT))
+   # app.run(host=HOST, port=PORT)
+   run()
