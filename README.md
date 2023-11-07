@@ -7,6 +7,13 @@ Ce TP suit l'architecture suivante:
 ## TP vert
 
 Au travers du service User (porte d'accès du réseau de services), un utilisateur peut effectuer différentes opérations:
-- set_booking_user: Permet de rajouter un booking à un utilisateur avec un film. Cela fait intervenir les services de Movie, Bookings et Times
+- set_booking_user: Permet de rajouter un booking à un utilisateur avec un film, une date et un utilisateur. Cela fait intervenir les services de Movie, Bookings et Times
 - get_booking_byuser: Permet de récupérer l'ensemble des bookings d'un utilisateur. Cela fait intervenir les services de Bookings
 - get_movies_byuser: Permet de récupérer l'ensemble des movies d'un utilisateur. Cela fait intervenir les services de Movies
+
+## TP rouge
+
+## Lancement
+
+Pour lancer les services il suffit seulement d'ouvrir 4 terminaux (un pour chaque service) puis à chaque fois de se positionner dans le dossier associé (ex: ``` cd ./movie ```) puis de lancer la commande ``` python service.py ```
+
