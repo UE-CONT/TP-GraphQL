@@ -13,6 +13,8 @@ Au travers du service User (porte d'accès du réseau de services), un utilisate
 
 ## TP rouge
 
+Nous avons transformé la requête get_booking_by_user. Pour l'exécuter vous devez commenter les lignes 175 et 176 de user/user.py et décomenter la ligne 177. Cela va lancer un run prédéfini avec un call a get_booking_by_user puis en parallèle un getBooking et on doit voir arriver la réponse de la première requêtes 5 secondes après. 
+
 ## Lancement
 
 Pour lancer les services il suffit seulement d'ouvrir 4 terminaux (un pour chaque service) puis à chaque fois de se positionner dans le dossier associé (ex: ``` cd ./movie ```) puis de lancer la commande ``` python service.py ```

@@ -29,6 +29,7 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
     def GetBookingByUser(self, request, context):
         for booking in self.db:
             if booking['userid'] == request.id:
+                # make the request last 5 seconds to show the asynchronous call
                 time.sleep(5)
                 print("User found!")
                 Dates = []
